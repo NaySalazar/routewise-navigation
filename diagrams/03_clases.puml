@@ -1,0 +1,40 @@
+@startuml
+class GridMap {
+  +width: int
+  +height: int
+  +blocked: Set<Point>
+  +neighbors(point): List<Point>
+}
+class RouteResult {
+  +path
+  +cost
+  +visited_nodes
+  +elapsed_ms
+  +strategy
+}
+interface RouteStrategy {
+  +find_route(grid,start,goal): RouteResult
+}
+class AStarStrategy
+class DijkstraStrategy
+interface RouteObserver {
+  +on_route_calculated(result)
+}
+class MetricsObserver
+class RouteService {
+  -strategies
+  -observers
+  +calculate(...): RouteResult
+}
+class CalculateRouteCommand {
+  +execute(): RouteResult
+}
+RouteStrategy <|.. AStarStrategy
+RouteStrategy <|.. DijkstraStrategy
+RouteObserver <|.. MetricsObserver
+RouteService --> RouteStrategy
+RouteService --> RouteObserver
+RouteService --> GridMap
+CalculateRouteCommand --> RouteService
+RouteStrategy --> RouteResult
+@enduml

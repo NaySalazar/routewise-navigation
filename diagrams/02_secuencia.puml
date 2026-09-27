@@ -1,0 +1,23 @@
+@startuml
+actor Usuario
+participant "RouteWise API" as API
+participant "CalculateRouteCommand" as CMD
+participant "RouteService" as SVC
+participant "AStarStrategy" as ASTAR
+participant "GridMap" as MAP
+participant "MetricsObserver" as OBS
+Usuario -> API : POST /routes
+API -> CMD : new(...)
+API -> CMD : execute()
+CMD -> SVC : calculate(grid,start,goal,"astar")
+SVC -> ASTAR : find_route(...)
+loop hasta alcanzar destino
+  ASTAR -> MAP : neighbors(nodo)
+  MAP --> ASTAR : vecinos transitables
+end
+ASTAR --> SVC : RouteResult
+SVC -> OBS : on_route_calculated(result)
+SVC --> CMD : RouteResult
+CMD --> API : RouteResult
+API --> Usuario : 200 + ruta + métricas
+@enduml

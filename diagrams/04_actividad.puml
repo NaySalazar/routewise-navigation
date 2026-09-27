@@ -1,0 +1,25 @@
+@startuml
+start
+:Recibir origen, destino y mapa;
+:Validar coordenadas y bloqueos;
+if (¿Solicitud válida?) then (Sí)
+  :Seleccionar estrategia;
+  if (¿A*?) then (Sí)
+    :Aplicar A* + heurística Manhattan;
+  else (No)
+    :Aplicar Dijkstra;
+  endif
+  :Explorar nodos hasta destino;
+  if (¿Ruta encontrada?) then (Sí)
+    :Reconstruir ruta óptima;
+    :Registrar tiempo y nodos visitados;
+    :Notificar MetricsObserver;
+    :Responder ruta y métricas;
+  else (No)
+    :Responder error sin ruta;
+  endif
+else (No)
+  :Responder error de validación;
+endif
+stop
+@enduml

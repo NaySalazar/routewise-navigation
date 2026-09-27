@@ -1,0 +1,20 @@
+@startuml
+skinparam componentStyle rectangle
+actor Usuario
+component "RouteWise API" as API
+component "Route Service" as RS
+component "CalculateRouteCommand\n<<Command>>" as CMD
+component "RouteStrategy\n<<Strategy>>" as STR
+component "A* Strategy" as ASTAR
+component "Dijkstra Strategy" as DIJ
+component "MetricsObserver\n<<Observer>>" as OBS
+component "GridMap" as MAP
+Usuario --> API : HTTP /routes
+API --> CMD : crea y ejecuta
+CMD --> RS : calculate()
+RS --> STR : selecciona estrategia
+STR <|.. ASTAR
+STR <|.. DIJ
+RS --> MAP : consulta vecinos
+RS --> OBS : route.calculated
+@enduml
