@@ -1,9 +1,11 @@
+from typing import Optional
+
 from app.domain.models import GridMap, Point, RouteResult
 from app.domain.ports import RouteObserver, RouteStrategy
 from app.infrastructure.strategies import AStarStrategy, DijkstraStrategy
 
 class RouteService:
-    def __init__(self, observers: list[RouteObserver] | None = None):
+    def __init__(self, observers: Optional[list[RouteObserver]] = None):
         self._strategies: dict[str, RouteStrategy] = {
             "astar": AStarStrategy(),
             "dijkstra": DijkstraStrategy(),

@@ -8,6 +8,15 @@ RouteWise expone una API REST capaz de calcular rutas óptimas sobre mapas en cu
 
 Evaluar una arquitectura de navegación, identificar oportunidades de mejora y comprobar con métricas el efecto de una estrategia optimizada sobre rendimiento, escalabilidad y mantenibilidad.
 
+## Arquitectura por capas
+
+El proyecto sigue un diseño por capas para separar responsabilidades y facilitar la evolución del sistema:
+
+- Capa de presentación: API REST con FastAPI.
+- Capa de aplicación: comandos y servicios de caso de uso.
+- Capa de dominio: modelos, rutas, validaciones y contratos de estrategia/observación.
+- Capa de infraestructura: implementaciones de A*, Dijkstra y métricas del Observer.
+
 ## Arquitectura
 
 ```text
@@ -41,7 +50,7 @@ A*       Dijkstra
 
 ## Tecnologías
 
-- Python 3.12+
+- Python 3.9+
 - FastAPI
 - Pydantic
 - Pytest
@@ -104,6 +113,12 @@ La respuesta incluye ruta, costo, tiempo de cálculo y número de nodos visitado
 ### `GET /metrics`
 Retorna las últimas métricas capturadas por el Observer.
 
+Los endpoints reales del proyecto son:
+
+- `GET /health`
+- `POST /routes`
+- `GET /metrics`
+
 ## Pruebas
 
 ```bash
@@ -115,16 +130,16 @@ Estado verificado durante la preparación de la entrega: **3 pruebas aprobadas**
 ## Benchmark
 
 ```bash
-python scripts/benchmark.py
+python3 scripts/benchmark.py
 ```
 
 Prueba sintética reproducible con semilla fija, 18 % de obstáculos y 30 ejecuciones por combinación.
 
 | Mapa | Dijkstra media | A* media | Reducción de tiempo | Nodos Dijkstra | Nodos A* |
 |---|---:|---:|---:|---:|---:|
-| 40x40 | 1.4258 ms | 0.5653 ms | 60.35 % | 956 | 346 |
-| 80x80 | 5.7748 ms | 2.3506 ms | 59.30 % | 3774 | 1293 |
-| 120x120 | 14.9831 ms | 5.1411 ms | 65.69 % | 8513 | 2798 |
+| 40x40 | 2.5114 ms | 1.0218 ms | 59.30 % | 956 | 346 |
+| 80x80 | 10.3604 ms | 3.8853 ms | 62.52 % | 3774 | 1293 |
+| 120x120 | 23.5545 ms | 8.5845 ms | 63.58 % | 8513 | 2798 |
 
 Los resultados son **métricas de laboratorio**, no un SLA de producción. En los tres tamaños A* conserva el mismo costo óptimo que Dijkstra y reduce de forma marcada el espacio explorado.
 
@@ -148,6 +163,16 @@ La lógica algorítmica está detrás del puerto `RouteStrategy`, lo que permite
 - Las métricas del Observer son volátiles en memoria.
 - El benchmark mide CPU local y no latencia de red ni infraestructura cloud.
 
+## Propuesta de mejora ágil
+
+Para una evolución ágil del proyecto, el siguiente backlog priorizado permite mejorar el valor académico y productivo sin romper la arquitectura actual:
+
+1. Mejorar la observabilidad con historial persistente y panel básico de métricas.
+2. Añadir validación de entrada y mapa de bloqueo más explícita en la API.
+3. Gestionar caché de rutas frecuentes para reducir coste computacional en consultas repetidas.
+4. Extender el dominio para soportar pesos por segmento y restricciones reales del mapa.
+5. Preparar una segunda iteración con despliegue contenedorizado y pipeline de pruebas automatizadas.
+
 ## Mejoras futuras
 
 - cachear rutas frecuentes mediante Cache-Aside;
@@ -157,14 +182,10 @@ La lógica algorítmica está detrás del puerto `RouteStrategy`, lo que permite
 - añadir rate limiting y balanceo horizontal;
 - evaluar variantes bidireccionales o jerárquicas para grafos mayores.
 
-## Integrantes
-
-- [Nombre integrante 1] - Líder / arquitectura
-- [Nombre integrante 2] - Desarrollo
-- [Nombre integrante 3] - UML / documentación
-- [Nombre integrante 4] - Pruebas / evaluación
-
 ## Contexto académico
+
+Este proyecto se presenta como entrega académica para la unidad de arquitectura de software y la actividad de navegación en entornos con múltiples estrategias de resolución. La solución enfatiza la comprensión de patrones estructurales y su validación empírica con pruebas y benchmark reproducibles.
+
 
 - **Curso:** Arquitectura de Software
 - **Unidad:** 3 - Evaluación y optimización de arquitecturas

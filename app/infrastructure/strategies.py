@@ -1,13 +1,14 @@
 import heapq
-import math
 import time
+from typing import Optional
+
 from app.domain.models import GridMap, Point, RouteResult
 from app.domain.ports import RouteStrategy
 
 
-def _reconstruct(came_from: dict[Point, Point | None], goal: Point) -> list[Point]:
+def _reconstruct(came_from: dict[Point, Optional[Point]], goal: Point) -> list[Point]:
     path: list[Point] = []
-    current: Point | None = goal
+    current: Optional[Point] = goal
     while current is not None:
         path.append(current)
         current = came_from[current]
@@ -21,7 +22,7 @@ class DijkstraStrategy(RouteStrategy):
     def find_route(self, grid: GridMap, start: Point, goal: Point) -> RouteResult:
         t0 = time.perf_counter()
         frontier: list[tuple[float, Point]] = [(0.0, start)]
-        came_from: dict[Point, Point | None] = {start: None}
+        came_from: dict[Point, Optional[Point]] = {start: None}
         cost_so_far: dict[Point, float] = {start: 0.0}
         visited = 0
 
@@ -56,7 +57,7 @@ class AStarStrategy(RouteStrategy):
     def find_route(self, grid: GridMap, start: Point, goal: Point) -> RouteResult:
         t0 = time.perf_counter()
         frontier: list[tuple[float, float, Point]] = [(0.0, 0.0, start)]
-        came_from: dict[Point, Point | None] = {start: None}
+        came_from: dict[Point, Optional[Point]] = {start: None}
         g_score: dict[Point, float] = {start: 0.0}
         visited = 0
 

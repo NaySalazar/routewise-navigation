@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Optional
 
 Point = tuple[int, int]
 
@@ -18,7 +18,7 @@ class RouteResult:
     strategy: str
 
 class GridMap:
-    def __init__(self, width: int, height: int, blocked: Iterable[Point] | None = None):
+    def __init__(self, width: int, height: int, blocked: Optional[Iterable[Point]] = None):
         if width < 2 or height < 2:
             raise ValueError("El mapa debe ser al menos de 2x2")
         self.width = width

@@ -2,48 +2,48 @@
   {
     "size": "40x40",
     "strategy": "dijkstra",
-    "mean_ms": 1.4258,
-    "p95_ms": 1.5803,
+    "mean_ms": 2.5114,
+    "p95_ms": 2.6944,
     "visited_mean": 956,
     "cost": 49.0
   },
   {
     "size": "40x40",
     "strategy": "astar",
-    "mean_ms": 0.5653,
-    "p95_ms": 0.6172,
+    "mean_ms": 1.0218,
+    "p95_ms": 1.0937,
     "visited_mean": 346,
     "cost": 49.0
   },
   {
     "size": "80x80",
     "strategy": "dijkstra",
-    "mean_ms": 5.7748,
-    "p95_ms": 6.1229,
+    "mean_ms": 10.3604,
+    "p95_ms": 10.6213,
     "visited_mean": 3774,
     "cost": 99.0
   },
   {
     "size": "80x80",
     "strategy": "astar",
-    "mean_ms": 2.3506,
-    "p95_ms": 2.7192,
+    "mean_ms": 3.8853,
+    "p95_ms": 4.0083,
     "visited_mean": 1293,
     "cost": 99.0
   },
   {
     "size": "120x120",
     "strategy": "dijkstra",
-    "mean_ms": 14.9831,
-    "p95_ms": 15.7041,
+    "mean_ms": 23.5545,
+    "p95_ms": 24.2015,
     "visited_mean": 8513,
     "cost": 149.0
   },
   {
     "size": "120x120",
     "strategy": "astar",
-    "mean_ms": 5.1411,
-    "p95_ms": 5.4035,
+    "mean_ms": 8.5845,
+    "p95_ms": 8.9045,
     "visited_mean": 2798,
     "cost": 149.0
   }
